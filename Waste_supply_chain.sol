@@ -10,6 +10,7 @@ pragma solidity ^0.8.0;
 
 
 contract WasteManagement {
+    
     struct Waste {
         address payable producer;
         string wasteType;
@@ -25,6 +26,8 @@ contract WasteManagement {
 
     address payable public collector;
     mapping(address => bool) public assignedProducers;
+
+    // events handlers
 
     event WasteRecorded(uint256 indexed wasteId, address indexed producer, string wasteType, string collectionLocation, uint256 weight);
     event WasteValidated(uint256 indexed wasteId, address indexed collector);
@@ -69,6 +72,20 @@ contract WasteManagement {
         emit WasteValidated(_wasteId, msg.sender);
     }
 
+    // add a return data of the waste
+
+    function allValidWaste(uint256 _id) public view returns(address payable, string memory, string memory, uint256,  bool, bool, bool) {
+        return (
+            wasteRecords[_id].producer,
+            wasteRecords[_id].wasteType,
+            wasteRecords[_id].collectionLocation,
+            wasteRecords[_id].weight,
+            wasteRecords[_id].isRecorded,
+            wasteRecords[_id].isValidated,
+            wasteRecords[_id].isPaid
+        );
+    } 
+
     function sendPayment(uint256 _wasteId) public onlyCollector {
         require(_wasteId <= wasteCounter, "Invalid waste ID");
         require(wasteRecords[_wasteId].isRecorded, "Waste is not yet recorded");
@@ -87,10 +104,12 @@ contract WasteManagement {
     }
 
     function withdrawFunds(uint256 _amount) public onlyCollector {
-    uint256 withdrawalAmount = _amount * 1 ether; // Convert the amount from Ether to wei
+    // uint256 withdrawalAmount = _amount * 1 ether; // Convert the amount from Ether to wei
+    uint256 withdrawalAmount = _amount ; // We will convert the amount to ether in the frontend
 
     require(withdrawalAmount <= address(this).balance, "Insufficient contract balance");
     collector.transfer(withdrawalAmount);
+
     emit FundsWithdrawn(collector, withdrawalAmount);
     }
 
