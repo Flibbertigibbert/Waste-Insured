@@ -109,6 +109,33 @@ contract WasteManagement {
     function depositFunds() public payable onlyCollector {
         emit FundsDeposited(collector, msg.value);
     }
+    
+    // Function to get waste information by waste ID
+    function getWasteInfo(uint256 _wasteId) public view returns (
+        address producer,
+        string memory wasteType,
+        string memory collectionLocation,
+        uint256 weight,
+        bool isRecorded,
+        bool isValidated,
+        bool isPaid
+    ) {
+        require(_wasteId <= wasteCounter && _wasteId > 0, "Invalid waste ID");
+
+        Waste storage waste = wasteRecords[_wasteId];
+
+        return (
+            waste.producer,
+            waste.wasteType,
+            waste.collectionLocation,
+            waste.weight,
+            waste.isRecorded,
+            waste.isValidated,
+            waste.isPaid
+        );
+    }
+
+    
 
     // Function to get all waste records stored in the contract
     function getAllWasteRecords() public view returns (
