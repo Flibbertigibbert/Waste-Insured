@@ -1,76 +1,115 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-//A WasteManagement contract that register people who bring waste(producer)
-//The registered producers record waste information. 
-//he waste information is validated by the collector,
-// and payment is made to the producer based on the weight of the waste
-
-
-
 contract WasteManagement {
+    // Enum to represent waste types
+    enum WasteType { Plastic, Metal }
+
     // Struct to represent waste records
     struct Waste {
         address payable producer;
-        string wasteType;
+        uint256 wasteType; // Store the waste type as an integer (0 for Plastic, 1 for Metal)
         string collectionLocation;
         uint256 weight;
         bool isRecorded;
         bool isValidated;
         bool isPaid;
+        uint256 hospitalId; // Hospital ID assigned by the waste admin
+    }
+
+    // Struct to represent information about hospitals
+    struct Hospital {
+        string name;
+        string location;
+        address walletAddress;
     }
 
     // Mapping to store waste records
     mapping(uint256 => Waste) public wasteRecords;
     uint256 public wasteCounter;
 
-    // Address of the collector
-    address payable public collector;
+    // Mapping to keep track of which hospital is chosen by each producer
+    mapping(address => uint256) public chosenHospitals;
 
-    // Mapping to keep track of assigned producers
-    mapping(address => bool) public assignedProducers;
+    // Address of the waste admin (previously named Collector)
+    address payable public wasteAdmin;
+
+    // Mapping to store information about hospitals
+    mapping(uint256 => Hospital) public hospitals;
+    uint256 public hospitalCounter; // Counter to track the number of registered hospitals
 
     // Events
-    event WasteRecorded(uint256 indexed wasteId, address indexed producer, string wasteType, string collectionLocation, uint256 weight);
-    event WasteValidated(uint256 indexed wasteId, address indexed collector);
-    event PaymentSent(address indexed producer, uint256 amount);
-    event FundsWithdrawn(address indexed collector, uint256 amount);
-    event FundsDeposited(address indexed collector, uint256 amount);
+    event WasteRecorded(uint256 indexed wasteId, address indexed producer, string wasteType, string collectionLocation, uint256 weight, uint256 hospitalId);
+    event WasteValidated(uint256 indexed wasteId, address indexed wasteAdmin);
+    event PaymentSent(address indexed recipient, uint256 amount);
+    event FundsWithdrawn(address indexed wasteAdmin, uint256 amount);
+    event FundsDeposited(address indexed wasteAdmin, uint256 amount);
+    event HospitalRegistered(uint256 indexed hospitalId, string name, string location, address walletAddress);
 
     // Modifier to restrict access to assigned producers
     modifier onlyProducer() {
-        require(assignedProducers[msg.sender], "Only the assigned producer can perform this action");
+        require(chosenHospitals[msg.sender] != 0, "You must choose a hospital before performing this action");
         _;
     }
 
-    // Modifier to restrict access to the collector
-    modifier onlyCollector() {
-        require(msg.sender == collector, "Only the collector can perform this action");
+
+    // Modifier to restrict access to the waste admin
+    modifier onlyWasteAdmin() {
+        require(msg.sender == wasteAdmin, "Only the waste admin can perform this action");
         _;
     }
 
-    // Constructor to set the collector during deployment
+    // Constructor to set the waste admin during deployment
     constructor() payable {
-        collector = payable(msg.sender);
+        wasteAdmin = payable(msg.sender);
+        hospitalCounter = 0;
     }
 
-    // Function for any producer to register themselves in the system
-    function assignProducer(address payable _producer) public {
-        require(_producer != address(0), "Invalid producer address");
+    // Function for the waste admin to register a partnered hospital
+    function registerPartnerHospital(string memory _name, string memory _location, address _walletAddress) public onlyWasteAdmin {
+        require(_walletAddress != address(0), "Invalid hospital address");
 
-        assignedProducers[_producer] = true;
+        hospitalCounter++;
+        hospitals[hospitalCounter] = Hospital(_name, _location, _walletAddress);
+        emit HospitalRegistered(hospitalCounter, _name, _location, _walletAddress);
+    }
+
+    
+    // Function for a producer to choose a hospital based on the hospital ID
+    function chooseHospital(uint256 _hospitalId) public {
+        require(_hospitalId <= hospitalCounter && _hospitalId > 0, "Invalid hospital ID");
+
+        chosenHospitals[msg.sender] = _hospitalId;
+    }
+
+    // Helper function to convert WasteType enum to string
+    function wasteTypeToString(WasteType _wasteType) internal pure returns (string memory) {
+        if (_wasteType == WasteType.Plastic) {
+            return "Plastic";
+        } else if (_wasteType == WasteType.Metal) {
+            return "Metal";
+        } else {
+            revert("Invalid waste type");
+        }
     }
 
     // Function for a producer to record waste information
-    function recordWaste(string memory _wasteType, string memory _collectionLocation, uint256 _weight) public onlyProducer {
-        wasteCounter++;
-        wasteRecords[wasteCounter] = Waste(payable(msg.sender), _wasteType, _collectionLocation, _weight, true, false, false);
+    function recordWaste(WasteType _wasteType, string memory _collectionLocation, uint256 _weight) public onlyProducer {
+        uint256 hospitalId = chosenHospitals[msg.sender];
+        require(hospitals[hospitalId].walletAddress != address(0), "You must choose a hospital before recording waste");
+        require(_wasteType == WasteType.Plastic || _wasteType == WasteType.Metal, "Invalid waste type");
 
-        emit WasteRecorded(wasteCounter, msg.sender, _wasteType, _collectionLocation, _weight);
+        wasteCounter++;
+        
+        wasteRecords[wasteCounter] = Waste(payable(msg.sender), uint256(_wasteType), _collectionLocation, _weight, true, false, false, hospitalId);
+
+        emit WasteRecorded(wasteCounter, msg.sender, wasteTypeToString(_wasteType), _collectionLocation, _weight, hospitalId);
     }
 
-    // Function for the collector to validate recorded waste
-    function validateWaste(uint256 _wasteId) public onlyCollector {
+
+    
+    // Function for the waste admin to validate recorded waste
+    function validateWaste(uint256 _wasteId) public onlyWasteAdmin {
         require(_wasteId <= wasteCounter, "Invalid waste ID");
         require(wasteRecords[_wasteId].isRecorded, "Waste is not yet recorded");
         require(!wasteRecords[_wasteId].isValidated, "Waste is already validated");
@@ -79,46 +118,49 @@ contract WasteManagement {
 
         emit WasteValidated(_wasteId, msg.sender);
 
-        // Calculate payment amount based on weight and rate (40 weight units per 1 Ether)
-        uint256 paymentAmount = (wasteRecords[_wasteId].weight * 1 ether) / 40;
+        // Get the waste type for the given waste ID
+        WasteType wasteType = WasteType(wasteRecords[_wasteId].wasteType);
 
-        require(address(this).balance >= paymentAmount, "Insufficient contract balance");
+        // Calculate payment amount based on weight and rate (20 weight units per 1 Ether for Plastic, 40 weight units per 1 Ether for Metal)
+        uint256 rate = (wasteType == WasteType.Plastic) ? 20 : 40;
+        uint256 paymentAmount = (wasteRecords[_wasteId].weight * 1 ether) / rate;
 
-        wasteRecords[_wasteId].isPaid = true; // Mark the waste as paid before transferring the payment
-        emit PaymentSent(wasteRecords[_wasteId].producer, paymentAmount);
-
-        // Automatically send payment to the producer
-        transferPayment(wasteRecords[_wasteId].producer, paymentAmount);
+        // Automatically send payment to the assigned hospital
+        transferPayment(hospitals[wasteRecords[_wasteId].hospitalId].walletAddress, paymentAmount);
     }
 
-    // Function for the collector to send payment to a producer
-    function transferPayment(address payable _recipient, uint256 _amount) internal {
-        _recipient.transfer(_amount);
+
+
+    // Function for the waste admin to send payment to a hospital
+    function transferPayment(address _recipient, uint256 _amount) internal {
+    address payable recipient = payable(_recipient);
+    recipient.transfer(_amount);
     }
 
-    // Function for the collector to withdraw funds from the contract
-    function withdrawFunds(uint256 _amount) public onlyCollector {
+    // Function for the waste admin to withdraw funds from the contract
+    function withdrawFunds(uint256 _amount) public onlyWasteAdmin {
         uint256 withdrawalAmount = _amount * 1 ether; // Convert the amount from Ether to wei
 
         require(withdrawalAmount <= address(this).balance, "Insufficient contract balance");
-        collector.transfer(withdrawalAmount);
-        emit FundsWithdrawn(collector, withdrawalAmount);
+        wasteAdmin.transfer(withdrawalAmount);
+        emit FundsWithdrawn(wasteAdmin, withdrawalAmount);
     }
 
-    // Function for the collector to deposit funds into the contract
-    function depositFunds() public payable onlyCollector {
-        emit FundsDeposited(collector, msg.value);
+    // Function for the waste admin to deposit funds into the contract
+    function depositFunds() public payable onlyWasteAdmin {
+        emit FundsDeposited(wasteAdmin, msg.value);
     }
-    
+
     // Function to get waste information by waste ID
     function getWasteInfo(uint256 _wasteId) public view returns (
         address producer,
-        string memory wasteType,
+        uint256  wasteType,
         string memory collectionLocation,
         uint256 weight,
         bool isRecorded,
         bool isValidated,
-        bool isPaid
+        bool isPaid,
+        uint256 hospitalId
     ) {
         require(_wasteId <= wasteCounter && _wasteId > 0, "Invalid waste ID");
 
@@ -131,45 +173,38 @@ contract WasteManagement {
             waste.weight,
             waste.isRecorded,
             waste.isValidated,
-            waste.isPaid
+            waste.isPaid,
+            waste.hospitalId
         );
     }
 
-    
-
-    // Function to get all waste records stored in the contract
-    function getAllWasteRecords() public view returns (
-        uint256[] memory wasteIds,
-        address[] memory producers,
-        string[] memory wasteTypes,
-        string[] memory collectionLocations,
-        uint256[] memory weights,
-        bool[] memory isRecorded,
-        bool[] memory isValidated,
-        bool[] memory isPaid
-    ) {
-        wasteIds = new uint256[](wasteCounter);
-        producers = new address[](wasteCounter);
-        wasteTypes = new string[](wasteCounter);
-        collectionLocations = new string[](wasteCounter);
-        weights = new uint256[](wasteCounter);
-        isRecorded = new bool[](wasteCounter);
-        isValidated = new bool[](wasteCounter);
-        isPaid = new bool[](wasteCounter);
-
-        for (uint256 i = 1; i <= wasteCounter; i++) {
-            Waste storage waste = wasteRecords[i];
-            wasteIds[i - 1] = i;
-            producers[i - 1] = waste.producer;
-            wasteTypes[i - 1] = waste.wasteType;
-            collectionLocations[i - 1] = waste.collectionLocation;
-            weights[i - 1] = waste.weight;
-            isRecorded[i - 1] = waste.isRecorded;
-            isValidated[i - 1] = waste.isValidated;
-            isPaid[i - 1] = waste.isPaid;
-        }
+     // Function to get the total number of registered hospitals
+    function getHospitalCount() public view returns (uint256) {
+        return hospitalCounter;
     }
 
+    // Function to get information about a specific hospital by hospital ID
+    function getHospitalInfo(uint256 _hospitalId) public view returns (string memory name, string memory location, address walletAddress) {
+        require(_hospitalId <= hospitalCounter && _hospitalId > 0, "Invalid hospital ID");
+
+        Hospital storage hospital = hospitals[_hospitalId];
+
+        return (
+            hospital.name,
+            hospital.location,
+            hospital.walletAddress
+        );
+    }
+
+    // Function to get the available waste types
+    function getAvailableWasteTypes() public pure returns (string[] memory) {
+        string[] memory wasteTypes = new string[](2);
+        wasteTypes[0] = "Plastic";
+        wasteTypes[1] = "Metal";
+        return wasteTypes;
+    }
+
+    
     // Fallback function to receive funds
     receive() external payable {}
 }
