@@ -1,17 +1,13 @@
 import React, { useState } from 'react'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
 import './App.css'
 import Cover from './pages/Cover'
 
 function App() {
 
   return (
-    <>
-      <div>
-        <ConnectButton />
+      <div className='p-20 max-sm:p-8 '>
         <Cover />
       </div>
-    </>
   )
 }
 
