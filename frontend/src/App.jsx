@@ -1,15 +1,15 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import './App.css'
+import Cover from './pages/Cover'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
       <div>
-        WasteInsured
         <ConnectButton />
+        <Cover />
       </div>
     </>
   )
