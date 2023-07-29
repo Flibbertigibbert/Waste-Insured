@@ -1,14 +1,23 @@
-import React, { useState } from 'react'
-import './App.css'
-import Cover from './pages/Cover'
+import {
+  BrowserRouter,
+  Switch,
+  Route
+} from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
 
-function App() {
-
+export default function App() {
   return (
-      <div className='p-20 max-sm:p-8 '>
-        <Cover />
-      </div>
-  )
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/dashboard">
+          <Dashboard />
+        </Route>
+      </Switch>
+    </BrowserRouter>
+  );
 }
 
-export default App
