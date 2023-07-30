@@ -1,11 +1,23 @@
-import React from 'react'
+import ConnectWallet from "../components/element/connectWallet";
 
-const Home = () => {
+export default function Home() {
   return (
-    <div>
-      Home
-    </div>
-  )
-}
+    <div  className="flex container mx-auto px-8 py-[123px]">
 
-export default Home
+      <div className="px-8">
+        <h1 className="text-black w-30 text-7xl font-semibold leading-normal">
+          Waste Management
+          For the Future,
+          <br />
+          Right Now
+        </h1>
+        <ConnectWallet />
+      </div>
+
+      <img
+        alt="world-logo"
+        src="src/assets/BD583E5A-C0FA-444F-989C-F8633DBF8D75.png"
+      />
+    </div>
+  );
+}

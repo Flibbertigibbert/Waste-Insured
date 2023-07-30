@@ -1,4 +1,3 @@
-import React from 'react'
 import SideImg from '../assets/wastecan.png'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import WasteLogo from '../assets/wasteisureLogo.png'
