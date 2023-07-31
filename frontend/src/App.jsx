@@ -10,7 +10,7 @@ export default function App() {
     createRoutesFromElements(
       <Route path="/" element={<Root />}>
         <Route index  element={<Home />} />
-        <Route index element={<Dashboard />} />
+        <Route index path="/dashboard" element={<Dashboard />} />
       </Route>
     )
   );
