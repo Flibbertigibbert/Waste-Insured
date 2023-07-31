@@ -1,5 +1,5 @@
 import ConnectWallet from "./element/connectWallet";
-
+import { Link } from "react-router-dom";
 export default function Navbar() {
   return (
     <div className="flex justify-between container mx-auto px-8">
@@ -11,10 +11,10 @@ export default function Navbar() {
 
       <div className="flex cursor-pointer gap-3 pt-[20px]">
         <h3 className="text-slate-900 text-sm font-normal leading-none">
-          Home
+          <Link to="/">Home</Link>
         </h3>
         <h3 className="text-slate-900 text-sm font-normal leading-none">
-          Dashboard{" "}
+          <Link to="/dashboard">Dashboard</Link>
         </h3>
       </div>
 
