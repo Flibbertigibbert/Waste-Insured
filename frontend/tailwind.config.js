@@ -5,6 +5,10 @@ export default {
   theme: {
     extend: {},
   },
+  screens: {
+    tablet: "640px",
+    laptop: "1366px",
+  },
   plugins: [],
 }
 

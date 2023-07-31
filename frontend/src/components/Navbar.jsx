@@ -1,26 +1,61 @@
 import ConnectWallet from "./element/connectWallet";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
+
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div className="flex justify-between pt-4 container mx-auto px-8">
-      <img
-        alt="logo"
-        className="w-[60px] cursor-pointer"
-        src="src/assets/wasteisureLogo.png"
-      />
+    <header className="pt-4 container mx-auto px-8">
+      <nav className=" flex justify-between ">
+        <div className="w-[60px] sm:w-[80px] cursor-pointer">
+          <img alt="logo" src="src/assets/wasteisureLogo.png" />
+        </div>
+        <div className="hidden sm:flex cursor-pointer gap-3 mt-[30px]">
+          <h3 className="text-[#282e82] text-sm font-normal leading-none">
+            <Link to="/">Home</Link>
+          </h3>
+          <h3 className="text-[#282e82] text-sm font-normal leading-none">
+            <Link to="/dashboard">Dashboard</Link>
+          </h3>
+        </div>
+        <div className="hidden  sm:flex mt-[20px] ">
+          <ConnectWallet />
+        </div>
 
-      <div className="flex cursor-pointer gap-3 pt-[20px]">
-        <h3 className="text-slate-900 text-sm font-normal leading-none">
-          <Link to="/">Home</Link>
-        </h3>
-        <h3 className="text-slate-900 text-sm font-normal leading-none">
-          <Link to="/dashboard">Dashboard</Link>
-        </h3>
-      </div>
+        <div className="md:hidden  mt-3">
+          <button className="text-dark" onClick={toggleMenu}>
+            {isOpen ? (
+              <FaTimes className="text-2xl" />
+            ) : (
+              <FaBars className="text-2xl" />
+            )}
+          </button>
+        </div>
+      </nav>
 
-      <div className="pt-[15px] ">
-        <ConnectWallet />
-      </div>
-    </div>
+      {isOpen && (
+        <div className="fixed top-0  right-0 bottom-0 left-0 flex flex-col items-center justify-center">
+          <button
+            className="text-white absolute top-4 right-4"
+            onClick={toggleMenu}
+          >
+            <FaTimes className="text-2xl" />
+          </button>
+
+          <h3 className="text-[#282e82] text-sm font-normal leading-none">
+            <Link to="/">Home</Link>
+          </h3>
+          <h3 className="text-[#282e82] text-sm font-normal leading-none">
+            <Link to="/dashboard">Dashboard</Link>
+          </h3>
+        </div>
+      )}
+    </header>
   );
 }
