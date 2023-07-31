@@ -40,7 +40,9 @@ export default function Navbar() {
       </nav>
 
       {isOpen && (
-        <div className="fixed top-0  right-0 bottom-0 left-0 flex flex-col items-center justify-center">
+        <div className="fixed z-20 top-0 bg-[#282e82] 
+         right-0 bottom-0 left-0 flex flex-col 
+         items-center gap-6 justify-center">
           <button
             className="text-white absolute top-4 right-4"
             onClick={toggleMenu}
@@ -48,12 +50,16 @@ export default function Navbar() {
             <FaTimes className="text-2xl" />
           </button>
 
-          <h3 className="text-[#282e82] text-sm font-normal leading-none">
+          <h3 className="text-white text-sm font-normal leading-none">
             <Link to="/">Home</Link>
           </h3>
-          <h3 className="text-[#282e82] text-sm font-normal leading-none">
+          <h3 className="text-white text-sm font-normal leading-none">
             <Link to="/dashboard">Dashboard</Link>
           </h3>
+
+          <div className="flex">
+          <ConnectWallet />
+        </div>
         </div>
       )}
     </header>
