@@ -17,9 +17,10 @@ const WasteCard = () => {
         <p className=' text-lg font-medium pt-2'>Weight: </p>
         <p className=' text-lg font-medium pt-3'>Waste Amount: </p>
         <p className=' text-lg font-medium p-1'>Hopital Choice Address: </p>
+        <p>Date</p>
       </div>
       <div className=' flex justify-center items-center'>
-        <button className=' bg-white py-2 px-2 rounded-lg font-medium text-blue-700 hover:text-white hover:bg-[#efae07] mt-5'>Transfer Payment</button>
+        <button className=' bg-white py-2 px-2 rounded-lg font-medium text-blue-700 hover:text-white hover:bg-[#efae07] mt-5 mb-5'>Transfer Payment</button>
       </div>
     </div>
   )
