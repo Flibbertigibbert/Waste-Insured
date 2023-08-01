@@ -3,7 +3,7 @@ import WasteInsuredAbi from '../abi/wasteInsured.json';
 import { BigNumber } from 'ethers';
 
 
-export const useContractSendWrite = (functionName, args) => {
+export const useContractSend = (functionName, args) => {
     // gas limit to use when sending transaction
 
     const gasLimit = BigNumber.from(1000000)
@@ -13,7 +13,7 @@ export const useContractSendWrite = (functionName, args) => {
         address: WasteInsuredAbi.address,
         // the abi of the contract of the waste
         abi: WasteInsuredAbi.abi,
-        functionName: functionName,
+        functionName,
         args,
         overrides: {
             gasLimit
