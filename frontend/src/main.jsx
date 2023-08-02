@@ -11,6 +11,7 @@ import { celoAlfajores, celo } from "wagmi/chains";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { ToastContainer } from "react-toastify";
 
+
 const { chains, publicClient } = configureChains(
   [celoAlfajores, celo],
   // [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
@@ -22,6 +23,7 @@ const { chains, publicClient } = configureChains(
     }),
   ]
 );
+
 
 const { connectors } = getDefaultWallets({
   appName: "WasteInsured",
@@ -46,7 +48,7 @@ root.render(
         borderRadius: 'small',
         fontStack: 'system',
       })}
-      chains={chains} >
+      chains={chains}>
         <ToastContainer
           position="top-center"
           autoClose={5000}
