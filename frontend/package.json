@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@rainbow-me/rainbowkit": "^0.12.18",
     "@types/react-blockies": "^1.4.1",
     "ethers": "^5.7.2",
