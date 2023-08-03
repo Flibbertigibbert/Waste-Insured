@@ -35,6 +35,10 @@ const SetCollectorModal = () => {
       setLoading('Assigning......')
       if(!isFormFilled) throw new Error("Please enter the correct collector wallet address");
 
+      const transTx = await assignProducer();
+      setLoading("Waiting for confirmation....")
+      await transTx
+
       setToggle(false)
       clearForm()
       

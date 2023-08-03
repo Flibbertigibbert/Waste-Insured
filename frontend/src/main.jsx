@@ -10,28 +10,29 @@ import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { celoAlfajores, celo } from "wagmi/chains";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { ToastContainer } from "react-toastify";
-
+import { publicProvider } from 'wagmi/providers/public';
 
 const { chains, publicClient } = configureChains(
   [celoAlfajores, celo],
+  [publicProvider()],
   // [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
-  [
-    jsonRpcProvider({
-      rpc: () => ({
-        http: "https://celo-alfajores.infura.io/v3/49c0ef025a9a4290894e3c76c1ce8e66",
-      }),
-    }),
-  ]
+  // [
+  //   jsonRpcProvider({
+  //     rpc: () => ({
+  //       http: "https://celo-alfajores.infura.io/v3/49c0ef025a9a4290894e3c76c1ce8e66",
+  //     }),
+  //   }),
+  // ]
 );
 
 
 const { connectors } = getDefaultWallets({
   appName: "WasteInsured",
   projectId: "0.1.0",
-  chains,
+  chains
 });
 
-const wagmiClient = createConfig({
+const wagmiConfig = createConfig({
   autoConnect: true,
   connectors,
   publicClient,
@@ -40,7 +41,7 @@ const wagmiClient = createConfig({
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <WagmiConfig config={wagmiClient}>
+    <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider
       theme={lightTheme({
         accentColor: '#EFAE07',

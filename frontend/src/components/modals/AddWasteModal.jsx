@@ -7,6 +7,7 @@ import ERC20 from '../../abi/erc20InstacnceAbi.json'
 
 const AddWasteModal = () => {
   const [name, setName] = useState('')
+  const [wasteType, setWasteType] = useState('')
   const [collectionLocation, setCollectionLocation] = useState('')
   const [weight, setWeight] = useState('')
   const [wasteAmount, setWasteAmount] = useState('')
@@ -16,11 +17,12 @@ const AddWasteModal = () => {
   const [loading, setLoading] = useState('')
 
   // to check if the form is filled
-  const isFormFilled = name && collectionLocation && weight && wasteAmount && hospitalAddress 
+  const isFormFilled = name && wasteType && collectionLocation && weight && wasteAmount && hospitalAddress 
 
   // clear the form when the form is filed 
   const handleClear = () => {
     setName('');
+    setWasteType('')
     setCollectionLocation('')
     setWeight('');
     setWasteAmount('');
@@ -28,6 +30,7 @@ const AddWasteModal = () => {
   }
 
   const [ debouncedName ] = useDebounce(name,500)
+  const [ debouncedWasteType ] = useDebounce(wasteType,500)
   const [ debouncedCollectionLocation] = useDebounce(collectionLocation,500)
   const [ debounceWeight ] = useDebounce(weight,500)
   const [ debounceWasteAmount ] = useDebounce(wasteAmount,500)
@@ -36,6 +39,7 @@ const AddWasteModal = () => {
   // function to write to the contract
   const {writeAsync : recordWaste } = useContractSend('recordWaste', [
     debouncedName,
+    debouncedWasteType,
     debouncedCollectionLocation,
     debounceWeight,
     debounceWasteAmount,
@@ -51,6 +55,11 @@ const AddWasteModal = () => {
     setLoading("Record.....")
     if(!isFormFilled) throw new Error("Please fill the correct details")
     
+
+    const transactTx = await recordWaste();
+    setLoading("Waiting For Confirmation")
+
+    await transactTx
     setToggle(false);
     handleClear()
   }
@@ -82,11 +91,14 @@ const AddWasteModal = () => {
               <div className='w-[600px] rounded-2xl bg-slate-100 p-5'>
                 <form onSubmit={addwaste}>
                       <div className='mb-8'>
-                          <input type="text" onChange={(e) => setName(e.target.value)} className='border-4 w-full text-white border-[#EFAE07] px-4 py-2 rounded-xl' name='Name' id="Name" placeholder='Full Name' />
+                          <input type="text" onChange={(e) => setName(e.target.value)} className='border-4 w-full  border-[#EFAE07] px-4 py-2 rounded-xl' name='wasteType' id="wasteType" placeholder='Depositor Full Name' />
+                      </div>
+                      <div className='mb-8'>
+                          <input type="text" onChange={(e) => setWasteType(e.target.value)} className='border-4 w-full  border-[#EFAE07] px-4 py-2 rounded-xl' name='wasteType' id="wasteType" placeholder='WasteType' />
                       </div>
 
                       <div className='mb-8'>
-                          <input type="text" onChange={(e) => setCollectionLocation(e.target.value)} className=' border-4 w-full text-white border-[#EFAE07] px-4 py-2 rounded-xl' name='collectionLocation' id="collectionLocation" placeholder='Hospital Location' />
+                          <input type="text" onChange={(e) => setCollectionLocation(e.target.value)} className=' border-4 w-full border-[#EFAE07] px-4 py-2 rounded-xl' name='collectionLocation' id="collectionLocation" placeholder='Hospital Location' />
                       </div>
 
                       <div className='mb-8'>
