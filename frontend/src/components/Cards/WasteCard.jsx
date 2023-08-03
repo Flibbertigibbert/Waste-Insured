@@ -1,4 +1,12 @@
-import React from 'react'
+import React, {useCallback} from 'react'
+import { ethers } from 'ethers'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { useAccount } from 'wagmi'
+import { toast } from 'react-toastify'
+import { useContractSend } from '../../hooks/useContractWrite'
+import { useContractCallRead } from '../../hooks/useContractRead'
+import { useSendTrantx } from '../../hooks/useSendTrans'
+import { useEffect, useState } from 'react'
 
 //   wasteType: string,
 //   collectionLocation: string,
@@ -6,7 +14,21 @@ import React from 'react'
 //   wasteAmount: string
 //   hospitalAdress: string
 
-const WasteCard = () => {
+const WasteCard = ({id, setError, setLoading, clear, searchQuery }) => {
+  const [waste, setWaste] = useState(null)
+
+  // to get the address that is connect to the dapp
+  const { address } = useAccount();
+
+  // to read data from the contract 
+  const {data: getWasteInfo} = useContractCallRead('getWasteInfo', [id], true)
+
+  // send to inform the contract we are about to perform transaction
+  const {writeAsync: wastePayment} = useContractSend('wastePayment', [Number(id)]);
+
+  const { sendTransaction: sendPayment} = useSendTrantx()
+  
+
   return (
     <div className='max-w-md m-auto text-white bg-[#06102b] rounded-lg w-72 drop-shadow-2xl p-2'>
       <div className=' pl-2'>

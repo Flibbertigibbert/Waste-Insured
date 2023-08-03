@@ -1,6 +1,6 @@
 import { useSendTransaction, usePrepareSendTransaction } from "wagmi";
 
-export const useSendTrans = ( sendTo, sendValue) => {
+export const useSendTrantx = ( sendTo, sendValue) => {
 
     const { config } = usePrepareSendTransaction({
         to: sendTo,
