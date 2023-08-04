@@ -106,7 +106,7 @@ const WasteCard = ({id, setError, setLoading, clear, searchQuery}) => {
 
   if (
     searchQuery != "" &&
-    !waste.wasteType
+    !waste.depositor
       .toLocaleLowerCase()
       .includes(searchQuery.toLocaleLowerCase().trim())
   ) {
