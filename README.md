@@ -1,11 +1,11 @@
 # WASTE-INSURED
 ## TEAM INSURED
 **Team Members**: 
-Adebola Rabiu (Debola) – Smart Contract Developer
+Adebola Rabiu (Flibbertigibbert) – Smart Contract Developer
 
-Muhdsodiq Bolarinwa (Amity) – Blockchain Developer
+Muhdsodiq Bolarinwa (Amity808) – Blockchain Developer
 
-Progress Ochuko (Koxy) - Frontend Developer
+Progress Ochuko (KoxyG) - Frontend Developer
 
 ## PROJECT: IB4A Hackathon - Hack O'Block
 Build Real-World Application using Blockchain Technology and Create an Innovative Solution around the Wasset Project.
