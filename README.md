@@ -7,8 +7,6 @@ Muhdsodiq Bolarinwa (Amity) – Blockchain Developer
 
 Progress Ochuko (Koxy) - Frontend Developer
 
-George Alade (Seyi) – UI/UX Designer
-
 ## PROJECT: IB4A Hackathon - Hack O'Block
 Build Real-World Application using Blockchain Technology and Create an Innovative Solution around the Wasset Project.
 
