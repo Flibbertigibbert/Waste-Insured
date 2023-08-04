@@ -3,7 +3,7 @@
 **Team Members**: 
 Adebola Rabiu (Debola) – Smart Contract Developer
 
-Muhdsodiq Bolarinwa (Amity) – Frontend Developer
+Muhdsodiq Bolarinwa (Amity) – Blockchain Developer
 
 Progress Ochuko (Koxy) - Frontend Developer
 
