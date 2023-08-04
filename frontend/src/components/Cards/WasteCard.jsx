@@ -88,11 +88,11 @@ const WasteCard = ({id, setError, setLoading, clear, searchQuery}) => {
       await toast.promise(handlePayment(), {
         pending: "Awaiting Payment",
         success: "Successfully Transfer Payment To Hospital. Kindly Visit the Hospital for health checkup",
-        error: "You must be wasset Admin before You Can make Payment"
+        error: "You must be wasset Admin before You Can make Payment or Insufficient funds"
       })
     } catch (e) {
       console.log({ e });
-      setError(e?.reason || e?.message || "Insufficient fund. Try again later")
+      setError(e?.reason || e?.message || "Something happen. Try again later")
     }
   };
 
