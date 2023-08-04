@@ -1,6 +1,5 @@
 import React, {useCallback} from 'react'
 import { ethers } from 'ethers'
-// import { parseEther } from '@ethersproject/units'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
 import { toast } from 'react-toastify'
@@ -28,7 +27,7 @@ const WasteCard = ({id, setError, setLoading, clear, searchQuery}) => {
   const [waste, setWaste] = useState(null)
 
   const {writeAsync: approve } = useContractTrans(
-    waste?.wasteAmount.toString() || "0"
+    waste?.wasteAmount?.toString() || "1"
   )
   
   const { openConnectModal } = useConnectModal();
@@ -60,18 +59,18 @@ const WasteCard = ({id, setError, setLoading, clear, searchQuery}) => {
   // function to hand the waste payment
   const handlePayment = async () => {
     if (!approve || !wastePayment) {
-      toast.error("Failed to make waste Payment")
+      throw ("Failed to make waste Payment")
     }
     //  approve wastepayment for the ERC20 cUSD token
     const approveTx = await approve();
     // await the transaction
-    await approveTx.wait(1)
+    await approveTx
     setLoading("Approving...")
 
     // once we approve, we handle payment 
     const res = await wastePayment();
     // wait for the transaction to make by the wasste Admin
-    await res.wait();
+    await res
   }
   
 
@@ -88,18 +87,21 @@ const WasteCard = ({id, setError, setLoading, clear, searchQuery}) => {
       // messages to display during the process of the payments
       await toast.promise(handlePayment(), {
         pending: "Awaiting Payment",
-        success: "Successfully Transfer Payment TO Hospital. Kindly Visit the Hospital for health checkup",
+        success: "Successfully Transfer Payment To Hospital. Kindly Visit the Hospital for health checkup",
         error: "You must be wasset Admin before You Can make Payment"
       })
     } catch (e) {
       console.log({ e });
-      setError(e?.reason || e?.message || "Something is wrong. Try again later")
+      setError(e?.reason || e?.message || "Insufficient fund. Try again later")
     }
   };
 
   if (!waste) return null;
 
-
+  // convert price from wei to cUSD
+  const convertWasteAmount = ethers.utils.formatEther(
+    waste.wasteAmount.toString()
+  )
 
   if (
     searchQuery != "" &&
@@ -117,15 +119,15 @@ const WasteCard = ({id, setError, setLoading, clear, searchQuery}) => {
         <h1 className=' text-center'><span className='text-xl font-bold text-[#efae07]'>Collector Address</span><br/><span className=' text-sm'>{truuncateAddress(waste.producer)}</span></h1>
       </div>
       <div className='pl-2 text-center'>
-        <p className=' text-[18px] text-[#efae07] font-medium pt-2'>Waste Type <br /><span className=' text-white text-base'>{waste.depositor}</span></p>
+        <p className=' text-[18px] text-[#efae07] font-medium pt-2'>Depositor Name <br /><span className=' text-white text-base'>{waste.depositor}</span></p>
         <p className=' text-[18px] text-[#efae07] font-medium pt-2'>Waste Type <br /><span className=' text-white text-base'>{waste.wasteType}</span></p>
         <p className=' text-[18px] text-[#efae07] font-medium pt-2'>Location Point <br /> <span className=' text-white text-sm'>{waste.collectionLocation}</span></p>
         <p className=' text-[18px] text-[#efae07] font-medium pt-3'>Weight <br /> <span className=' text-white text-sm'>{waste.weight}</span> </p>
-        <p className=' text-[18px] text-[#efae07] font-medium pt-3'>Waste Amount <br /> <span className=' text-white text-sm'>{waste.wasteAmount}</span> </p>
+        <p className=' text-[18px] text-[#efae07] font-medium pt-3'>Waste Amount <br /> <span className=' text-white text-sm'>$ {convertWasteAmount}</span></p>
         <p className=' text-[18px] font-medium p-1 text-[#efae07]'>Hopital Choice Address <span className=' text-white text-sm'>{truuncateAddress(waste.hospitalAdress)}</span></p>
       </div>
       <div className=' flex justify-center items-center'>
-        <button className=' bg-white py-2 px-2 rounded-lg font-medium text-blue-700 hover:text-white hover:bg-[#efae07] mt-5 mb-5'>Transfer Payment</button>
+        <button className=' bg-white py-2 px-2 rounded-lg font-medium text-blue-700 hover:text-white hover:bg-[#efae07] mt-5 mb-5' onClick={payment}>Transfer Payment</button>
       </div>
     </div>
   )

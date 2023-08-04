@@ -4,6 +4,7 @@ import { useContractSend } from '../../hooks/useContractWrite';
 import { toast } from 'react-toastify';
 import { useDebounce } from 'use-debounce';
 import ERC20 from '../../abi/erc20InstacnceAbi.json'
+import { ethers } from 'ethers';
 
 const AddWasteModal = () => {
   const [name, setName] = useState('')
@@ -25,24 +26,30 @@ const AddWasteModal = () => {
     setWasteType('')
     setCollectionLocation('')
     setWeight('');
-    setWasteAmount('');
+    setWasteAmount(0);
     setHospitalAddress('');
   }
 
+ 
+  
   const [ debouncedName ] = useDebounce(name,500)
   const [ debouncedWasteType ] = useDebounce(wasteType,500)
   const [ debouncedCollectionLocation] = useDebounce(collectionLocation,500)
   const [ debounceWeight ] = useDebounce(weight,500)
   const [ debounceWasteAmount ] = useDebounce(wasteAmount,500)
   const [ debounceHospitalAddress ] = useDebounce(hospitalAddress,500)
-
+  
+   // convert wasteAmount to wei
+  const convertWasteAmount = ethers.utils.parseEther(
+    debounceWasteAmount.toString() || "0"
+  )
   // function to write to the contract
   const {writeAsync : recordWaste } = useContractSend('recordWaste', [
     debouncedName,
     debouncedWasteType,
     debouncedCollectionLocation,
     debounceWeight,
-    debounceWasteAmount,
+    convertWasteAmount,
     debounceHospitalAddress
   ])
 
@@ -70,7 +77,7 @@ const AddWasteModal = () => {
       await toast.promise(handleRecordWaste(), {
         pending: "Recording waste",
         success: "Waste Recorded",
-        error: "Error Recording Waste"
+        error: "Error Recording Waste, you are not a Collector"
       })
     } catch (e) {
       console.log({ e });
