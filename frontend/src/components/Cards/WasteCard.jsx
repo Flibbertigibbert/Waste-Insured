@@ -37,16 +37,17 @@ const WasteCard = ({id, setError, setLoading, clear, searchQuery}) => {
     if (!getWasteInfo) return null;
 
     setWaste({
-      producer: getWasteInfo[0],
-      depositor: getWasteInfo[1],
-      wasteType: getWasteInfo[2],
-      collectionLocation: getWasteInfo[3],
-      weight: Number(getWasteInfo[4]),
-      isRecorded: Boolean(getWasteInfo[5]),
-      isValidated: Boolean(getWasteInfo[6]),
-      isPaid: Boolean(getWasteInfo[7]),
-      wasteAmount: Number(getWasteInfo[8]),
-      hospitalAdress: getWasteInfo[9]
+      wassetWasteAdmin: getWasteInfo[0],
+      producer: getWasteInfo[1],
+      depositor: getWasteInfo[2],
+      wasteType: getWasteInfo[3],
+      collectionLocation: getWasteInfo[4],
+      weight: Number(getWasteInfo[5]),
+      isRecorded: Boolean(getWasteInfo[6]),
+      isValidated: Boolean(getWasteInfo[7]),
+      isPaid: Boolean(getWasteInfo[8]),
+      wasteAmount: Number(getWasteInfo[9]),
+      hospitalAdress: getWasteInfo[10]
     })
   }, [getWasteInfo])
 
@@ -115,21 +116,40 @@ const WasteCard = ({id, setError, setLoading, clear, searchQuery}) => {
 
   return (
     <div className='max-w-md m-auto text-white bg-[#06102b] rounded-lg w-72 drop-shadow-2xl p-2'>
-      <div className=' pl-2'>
-        <h1 className=' text-center'><span className='text-xl font-bold text-[#efae07]'>Collector Address</span><br/><span className=' text-sm'>{truuncateAddress(waste.producer)}</span></h1>
-      </div>
-      <div className='pl-2 text-center'>
-        <p className=' text-[18px] text-[#efae07] font-medium pt-2'>Depositor Name <br /><span className=' text-white text-base'>{waste.depositor}</span></p>
-        <p className=' text-[18px] text-[#efae07] font-medium pt-2'>Waste Type <br /><span className=' text-white text-base'>{waste.wasteType}</span></p>
-        <p className=' text-[18px] text-[#efae07] font-medium pt-2'>Location Point <br /> <span className=' text-white text-sm'>{waste.collectionLocation}</span></p>
-        <p className=' text-[18px] text-[#efae07] font-medium pt-3'>Weight <br /> <span className=' text-white text-sm'>{waste.weight}</span> </p>
-        <p className=' text-[18px] text-[#efae07] font-medium pt-3'>Weight <br /> <span className=' text-white text-sm'>{waste.isPaid? "Yes Paid" : "Not paid"}</span> </p>
-        <p className=' text-[18px] text-[#efae07] font-medium pt-3'>Waste Amount <br /> <span className=' text-white text-sm'>$ {convertWasteAmount}</span></p>
-        <p className=' text-[18px] font-medium p-1 text-[#efae07]'>Hopital Choice Address <span className=' text-white text-sm'>{truuncateAddress(waste.hospitalAdress)}</span></p>
-      </div>
-      <div className=' flex justify-center items-center'>
-        <button className=' bg-white py-2 px-2 rounded-lg font-medium text-blue-700 hover:text-white hover:bg-[#efae07] mt-5 mb-5' onClick={payment}>Transfer Payment</button>
-      </div>
+      
+      {address == waste.wassetWasteAdmin ? (
+        <>
+          <div className=' pl-2'>
+            <h1 className=' text-center'><span className='text-xl font-bold text-[#efae07]'>Collector Address</span><br/><span className=' text-sm'>{truuncateAddress(waste.producer)}</span></h1>
+          </div>
+          <div className='pl-2 text-center'>
+            <p className=' text-[18px] text-[#efae07] font-medium pt-2'>Depositor Name <br /><span className=' text-white text-base'>{waste.depositor}</span></p>
+            <p className=' text-[18px] text-[#efae07] font-medium pt-2'>Waste Type <br /><span className=' text-white text-base'>{waste.wasteType}</span></p>
+            <p className=' text-[18px] text-[#efae07] font-medium pt-2'>Location Point <br /> <span className=' text-white text-sm'>{waste.collectionLocation}</span></p>
+            <p className=' text-[18px] text-[#efae07] font-medium pt-3'>Weight <br /> <span className=' text-white text-sm'>{waste.weight}</span> </p>
+            <p className=' text-[18px] text-[#efae07] font-medium pt-3'>Weight <br /> <span className=' text-white text-sm'>{waste.isPaid? "Yes Paid" : "Not paid"}</span> </p>
+            <p className=' text-[18px] text-[#efae07] font-medium pt-3'>Waste Amount <br /> <span className=' text-white text-sm'>$ {convertWasteAmount}</span></p>
+            <p className=' text-[18px] font-medium p-1 text-[#efae07]'>Hopital Choice Address <span className=' text-white text-sm'>{truuncateAddress(waste.hospitalAdress)}</span></p>
+          </div>
+          <div className=' flex justify-center items-center'>
+            <button className=' bg-white py-2 px-2 rounded-lg font-medium text-blue-700 hover:text-white hover:bg-[#efae07] mt-5 mb-5' onClick={payment}>Transfer Payment</button>
+          </div>
+        </>
+        ) : <>
+            <div className=' pl-2'>
+              <h1 className=' text-center'><span className='text-xl font-bold text-[#efae07]'>Collector Address</span><br/><span className=' text-sm'>{truuncateAddress(waste.producer)}</span></h1>
+            </div>
+            <div className='pl-2 text-center'>
+              <p className=' text-[18px] text-[#efae07] font-medium pt-2'>Depositor Name <br /><span className=' text-white text-base'>{waste.depositor}</span></p>
+              <p className=' text-[18px] text-[#efae07] font-medium pt-2'>Waste Type <br /><span className=' text-white text-base'>{waste.wasteType}</span></p>
+              <p className=' text-[18px] text-[#efae07] font-medium pt-2'>Location Point <br /> <span className=' text-white text-sm'>{waste.collectionLocation}</span></p>
+              <p className=' text-[18px] text-[#efae07] font-medium pt-3'>Weight <br /> <span className=' text-white text-sm'>{waste.weight}</span> </p>
+              <p className=' text-[18px] text-[#efae07] font-medium pt-3'>Weight <br /> <span className=' text-white text-sm'>{waste.isPaid? "Yes Paid" : "Not paid"}</span> </p>
+              <p className=' text-[18px] text-[#efae07] font-medium pt-3'>Waste Amount <br /> <span className=' text-white text-sm'>$ {convertWasteAmount}</span></p>
+              <p className=' text-[18px] font-medium p-1 text-[#efae07]'>Hopital Choice Address <span className=' text-white text-sm'>{truuncateAddress(waste.hospitalAdress)}</span></p>
+            </div>
+        </>
+      }
     </div>
   )
 }

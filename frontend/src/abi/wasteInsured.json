@@ -1,19 +1,6 @@
 {
-    "address": "0x05AD4955682563B75Ed8c96ad838961D1C8444AE",
+    "address": "0x36B5626E585D30A3fbD339bBCf0E42FDa894F7A4",
     "abi": [
-        {
-            "inputs": [
-                {
-                    "internalType": "address payable",
-                    "name": "_collector",
-                    "type": "address"
-                }
-            ],
-            "name": "assignProducer",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
         {
             "inputs": [],
             "stateMutability": "payable",
@@ -114,98 +101,6 @@
             "type": "event"
         },
         {
-            "inputs": [
-                {
-                    "internalType": "string",
-                    "name": "_depositor",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_wasteType",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_collectionLocation",
-                    "type": "string"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "_weight",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "_wasteAmount",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "address payable",
-                    "name": "_hospitalAddress",
-                    "type": "address"
-                }
-            ],
-            "name": "recordWaste",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "string",
-                    "name": "_name",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_location",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_hospitalType",
-                    "type": "string"
-                },
-                {
-                    "internalType": "address payable",
-                    "name": "_walletAddress",
-                    "type": "address"
-                }
-            ],
-            "name": "registerPartnerHospital",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "_wasteId",
-                    "type": "uint256"
-                }
-            ],
-            "name": "validateWaste",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "_wasteId",
-                    "type": "uint256"
-                }
-            ],
-            "name": "wastePayment",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
             "anonymous": false,
             "inputs": [
                 {
@@ -282,19 +177,15 @@
         {
             "inputs": [
                 {
-                    "internalType": "uint256",
-                    "name": "_amount",
-                    "type": "uint256"
+                    "internalType": "address payable",
+                    "name": "_collector",
+                    "type": "address"
                 }
             ],
-            "name": "withdrawFunds",
+            "name": "assignProducer",
             "outputs": [],
             "stateMutability": "nonpayable",
             "type": "function"
-        },
-        {
-            "stateMutability": "payable",
-            "type": "receive"
         },
         {
             "inputs": [
@@ -372,6 +263,11 @@
             ],
             "name": "getWasteInfo",
             "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                },
                 {
                     "internalType": "address",
                     "name": "",
@@ -487,6 +383,85 @@
             "type": "function"
         },
         {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_depositor",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_wasteType",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_collectionLocation",
+                    "type": "string"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_weight",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_wasteAmount",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "address payable",
+                    "name": "_hospitalAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "recordWaste",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_location",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_hospitalType",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address payable",
+                    "name": "_walletAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "registerPartnerHospital",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_wasteId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "validateWaste",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
             "inputs": [],
             "name": "wasteAdmin",
             "outputs": [
@@ -516,12 +491,30 @@
             "inputs": [
                 {
                     "internalType": "uint256",
+                    "name": "_wasteId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "wastePayment",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
                     "name": "",
                     "type": "uint256"
                 }
             ],
             "name": "wasteRecords",
             "outputs": [
+                {
+                    "internalType": "address payable",
+                    "name": "wassetWasteAdmin",
+                    "type": "address"
+                },
                 {
                     "internalType": "address payable",
                     "name": "producer",
@@ -575,6 +568,23 @@
             ],
             "stateMutability": "view",
             "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "withdrawFunds",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "stateMutability": "payable",
+            "type": "receive"
         }
     ]
 }
