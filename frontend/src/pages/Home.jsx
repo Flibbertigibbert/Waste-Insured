@@ -12,7 +12,7 @@ export default function Home() {
       <section className="flex flex-col sm:flex-row">
         <div className="px-4 sm:px-8">
           <h1 className="text-[#282e82] sm:pb-4 text-3xl sm:text-6xl font-semibold sm:leading-normal">
-            Waste Management <br />
+            Waste To Free Health<br />
             For the Future,
             <br />
             Right Now
@@ -40,7 +40,7 @@ export default function Home() {
             <div className="p-[60px] flex gap-8">
               <div className="rounded-full text-white
              bg-[#282e82] w-[25px] h-[25px] sm:w-[30px]  sm:h-[30px] text-center ">1</div>
-              <h3 className="text-center text-black text-base sm:text-xl font-bold leading-7">Search for a <br /> collection center <br /> around you</h3>
+              <h3 className="text-center text-black text-base sm:text-xl font-bold leading-7">Visit Our <br /> Collection Center <br /> Around You</h3>
             </div>
             <div className="w-[150px]  sm:w-[200px] mx-[80px] ">
               <img alt="first-icon" src={firstIcon} />
@@ -64,7 +64,7 @@ export default function Home() {
             <div className="p-[60px] flex gap-8">
               <div className="rounded-full text-white
              bg-[#282e82] w-[25px] h-[25px] sm:w-[30px]  sm:h-[30px] text-center ">3</div>
-              <h3 className="text-center text-black text-base sm:text-xl font-bold leading-7">Get paid  and  <br /> jollificate</h3>
+              <h3 className="text-center text-black text-base sm:text-xl font-bold leading-7">Get Paid or <br /> Get Free Health and <br /> Jollificate</h3>
             </div>
             <div className="w-[150px]  sm:w-[200px] mx-[80px] ">
               <img alt="first-icon" src={thirdIcon} />
