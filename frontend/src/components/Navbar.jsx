@@ -2,6 +2,7 @@ import ConnectWallet from "./element/connectWallet";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import NavBarLogo from '../assets/wasteisureLogo.png'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +15,7 @@ export default function Navbar() {
     <header className="pt-4 container mx-auto px-8">
       <nav className=" flex justify-between ">
         <div className="w-[60px] sm:w-[80px] cursor-pointer">
-          <img alt="logo" src="src/assets/wasteisureLogo.png" />
+          <img alt="logo" src={NavBarLogo} />
         </div>
         <div className="hidden sm:flex cursor-pointer gap-3 mt-[30px]">
           <h3 className="text-[#282e82] text-sm font-normal leading-none">
