@@ -1,4 +1,8 @@
 import ConnectWallet from "../components/element/connectWallet";
+import FirstImg from '../assets/BD583E5A-C0FA-444F-989C-F8633DBF8D75.png'
+import firstIcon from '../assets/first-icon.jpeg'
+import secIcon from '../assets/second-icon.jpeg'
+import thirdIcon from '../assets/third-icon.jpeg'
 
 export default function Home() {
   return (
@@ -20,7 +24,7 @@ export default function Home() {
         <img
           alt="world-logo"
           className=" w-[270px] h-[270px] mb-[120px] sm:mb-[90px] sm:w-[450px] sm:h-[450px]"
-          src="src/assets/BD583E5A-C0FA-444F-989C-F8633DBF8D75.png"
+          src={FirstImg}
         />
       </section>
 
@@ -39,7 +43,7 @@ export default function Home() {
               <h3 className="text-center text-black text-base sm:text-xl font-bold leading-7">Search for a <br /> collection center <br /> around you</h3>
             </div>
             <div className="w-[150px]  sm:w-[200px] mx-[80px] ">
-              <img alt="first-icon" src="src/assets/first-icon.jpeg" />
+              <img alt="first-icon" src={firstIcon} />
             </div>
           </div>
 
@@ -51,7 +55,7 @@ export default function Home() {
               <h3 className="text-center text-black text-base sm:text-xl font-bold leading-7">Your waste is <br /> measured and the value is <br /> recorded</h3>
             </div>
             <div className="w-[150px]  sm:w-[200px] mx-[80px] ">
-              <img alt="first-icon" src="src/assets/second-icon.jpeg" />
+              <img alt="first-icon" src={secIcon} />
             </div>
           </div>
 
@@ -63,7 +67,7 @@ export default function Home() {
               <h3 className="text-center text-black text-base sm:text-xl font-bold leading-7">Get paid  and  <br /> jollificate</h3>
             </div>
             <div className="w-[150px]  sm:w-[200px] mx-[80px] ">
-              <img alt="first-icon" src="src/assets/third-icon.jpeg" />
+              <img alt="first-icon" src={thirdIcon} />
             </div>
           </div>
 
