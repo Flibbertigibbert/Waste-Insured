@@ -41,3 +41,8 @@ The DAPP will foster collaboration between various stakeholders, including waste
 
 ## CONCLUSION:
 The Waste Insured DAPP aims to revolutionize waste management by utilizing blockchain technology, incentivizing responsible waste disposal practices, and fostering collaboration among various stakeholders. Through this innovative solution, we strive to contribute to a cleaner environment and a more sustainable future.
+
+# Link to Demo Site 
+
+https://waste-isured.vercel.app/
+
