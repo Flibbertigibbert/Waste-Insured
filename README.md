@@ -46,3 +46,12 @@ The Waste Insured DAPP aims to revolutionize waste management by utilizing block
 
 https://waste-isured.vercel.app/
 
+## To run the website locally use
+** git clone https://github.com/Flibbertigibbert/Waste-Insured
+
+## After use run
+** npm install
+
+## To start the application
+** npm run dev
+
