@@ -144,7 +144,7 @@ const WasteCard = ({id, setError, setLoading, clear, searchQuery}) => {
               <p className=' text-[18px] text-[#efae07] font-medium pt-2'>Waste Type <br /><span className=' text-white text-base'>{waste.wasteType}</span></p>
               <p className=' text-[18px] text-[#efae07] font-medium pt-2'>Location Point <br /> <span className=' text-white text-sm'>{waste.collectionLocation}</span></p>
               <p className=' text-[18px] text-[#efae07] font-medium pt-3'>Weight <br /> <span className=' text-white text-sm'>{waste.weight}</span> </p>
-              <p className=' text-[18px] text-[#efae07] font-medium pt-3'>Weight <br /> <span className=' text-white text-sm'>{waste.isPaid? "Yes Paid" : "Not paid"}</span> </p>
+              <p className=' text-[18px] text-[#efae07] font-medium pt-3'>Payment Status <br /> <span className=' text-white text-sm'>{waste.isPaid? "Yes Paid" : "Not paid"}</span> </p>
               <p className=' text-[18px] text-[#efae07] font-medium pt-3'>Waste Amount <br /> <span className=' text-white text-sm'>$ {convertWasteAmount}</span></p>
               <p className=' text-[18px] font-medium p-1 text-[#efae07]'>Hopital Choice Address <span className=' text-white text-sm'>{truuncateAddress(waste.hospitalAdress)}</span></p>
             </div>
