@@ -3,7 +3,7 @@
 **Team Members**: 
 Adebola Rabiu (Flibbertigibbert) – Smart Contract Developer
 
-Muhdsodiq Bolarinwa (Amity808) – Blockchain Developer
+Muhdsodiq Bolarinwa (Amity808) – Software Developer
 
 Progress Ochuko (KoxyG) - Frontend Developer
 
