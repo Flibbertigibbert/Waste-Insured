@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import AddWasteModal from './modals/AddWasteModal'
 import SetCollectorModal from './modals/SetCollectorModal';
+import AddHospitalModal from './modals/AddHospitalModal';
 import { FaBars, FaTimes } from "react-icons/fa";
 
 const SideBar = () => {
@@ -16,6 +17,7 @@ const SideBar = () => {
             <h1 className=' text-3xl font-bold max-sm:text-xl text-blue-950 mr-5 my-6'>Dashboard</h1>
             <SetCollectorModal />
             <AddWasteModal />
+            <AddHospitalModal />
         </div>
     <div className="md:hidden  mt-3 ml-10">
     <h1 className=' text-3xl font-bold max-sm:text-xl text-blue-950 mr-5 my-6'>Dashboard</h1>
@@ -42,7 +44,7 @@ const SideBar = () => {
             <h1 className=' text-3xl font-bold max-sm:text-xl text-blue-950 mr-5 my-6'>Dashboard</h1>
             <SetCollectorModal />
             <AddWasteModal />
-
+            <AddHospitalModal />
         </div>
       )}
     </div>

@@ -38,6 +38,7 @@ contract WasteInsured {
     // Struct to represent information about hospitals
     struct Hospital {
         string name;
+        string image;
         string location;
         string hospitalType;
         address payable walletAddress;
@@ -86,11 +87,11 @@ contract WasteInsured {
     }
 
     // Function for the waste admin to register a partnered hospital
-    function registerPartnerHospital(string memory _name, string memory _location, string memory _hospitalType,address payable _walletAddress) public onlyWasteAdmin {
+    function registerPartnerHospital(string memory _name, string memory _image, string memory _location, string memory _hospitalType,address payable _walletAddress) public onlyWasteAdmin {
         require(_walletAddress != address(0), "Invalid hospital address");
 
         hospitalCounter++;
-        hospitals[hospitalCounter] = Hospital(_name, _location, _hospitalType, _walletAddress);
+        hospitals[hospitalCounter] = Hospital(_name, _image, _location, _hospitalType, _walletAddress);
         emit HospitalRegistered(hospitalCounter, _name, _location, _hospitalType,  _walletAddress);
     }
 
@@ -198,13 +199,14 @@ contract WasteInsured {
     }
 
     // Function to get information about a specific hospital by hospital ID
-    function getHospitalInfo(uint256 _hospitalId) public view returns (string memory name, string memory location, string memory, address walletAddress) {
+    function getHospitalInfo(uint256 _hospitalId) public view returns (string memory name, string memory, string memory location, string memory, address walletAddress) {
         require(_hospitalId <= hospitalCounter && _hospitalId > 0, "Invalid hospital ID");
 
         Hospital storage hospital = hospitals[_hospitalId];
 
         return (
             hospital.name,
+            hospital.image,
             hospital.location,
             hospital.hospitalType,
             hospital.walletAddress
