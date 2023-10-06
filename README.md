@@ -3,7 +3,7 @@
 **Team Members**: 
 Adebola Rabiu (Flibbertigibbert) – Smart Contract Developer
 
-Muhdsodiq Bolarinwa (Amity808) – Blockchain Developer
+Muhdsodiq Bolarinwa (Amity808) – Software Developer
 
 Progress Ochuko (KoxyG) - Frontend Developer
 
@@ -41,3 +41,17 @@ The DAPP will foster collaboration between various stakeholders, including waste
 
 ## CONCLUSION:
 The Waste Insured DAPP aims to revolutionize waste management by utilizing blockchain technology, incentivizing responsible waste disposal practices, and fostering collaboration among various stakeholders. Through this innovative solution, we strive to contribute to a cleaner environment and a more sustainable future.
+
+# Link to Demo Site 
+
+https://waste-isured.vercel.app/
+
+## To run the website locally use
+**git clone https://github.com/Flibbertigibbert/Waste-Insured
+
+## After use run
+**npm install
+
+## To start the application
+**npm run dev
+
