@@ -40,6 +40,7 @@ const HospitalCard = ({ id, setError, setLoading, clear }) => {
   const handleCopy = (copyAdd) => {
     setCopyAddress(copyAdd);
     navigator.clipboard.writeText(`${copyAdd}`);
+    toast.success(`Address copied ${hospital.walletAddress}`)
 
   }
   return (
